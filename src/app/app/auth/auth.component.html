@@ -1,0 +1,122 @@
+<div class="row justify-content-center" style="margin: 20px;">
+    <div class="col-md-6 col-lg-5">
+        <div class="login-wrap p-2 p-md-5">
+            <div class="icon d-flex align-items-center justify-content-center">
+                <span>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor"
+                        class="bi bi-lock" viewBox="0 0 16 16">
+                        <path
+                            d="M8 1a2 2 0 0 1 2 2v4H6V3a2 2 0 0 1 2-2zm3 6V3a3 3 0 0 0-6 0v4a2 2 0 0 0-2 2v5a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2zM5 8h6a1 1 0 0 1 1 1v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V9a1 1 0 0 1 1-1z" />
+                    </svg>
+                </span>
+            </div>
+            <h3 class="text-center mb-4">Make Your Sign In</h3>
+            <div class="form-group">
+                <input type="text" [(ngModel)]="this.loginEmail" class="form-control rounded-left"
+                    placeholder="Username" required>
+            </div>
+            <div class="form-group d-flex">
+                <input type="password" [(ngModel)]="this.loginPassword" class="form-control rounded-left"
+                    placeholder="Password" required>
+            </div>
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary rounded submit p-3 px-5"
+                    (click)="LoginToAccount()">Login</button>
+            </div>
+            <br>
+            <br>
+            <br>
+            <div class="w-50 text-md-left" style="margin-top: 25px;">
+                <a (click)="openForgetPass(content)">Forgot Password</a>
+            </div>
+            <div class="w-50 text-md-left" style="margin-top: 25px;">
+                <a (click)="openRegister(contentregister)">Create New Account</a>
+            </div>
+        </div>
+    </div>
+</div>
+<ng-template #content let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title">Reset Your Password</h4>
+        <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+    </div>
+    <div class="modal-body">
+
+        <div class="form-group">
+            <label for="">Email address</label>
+            <input type="text" class="form-control" [(ngModel)]="this.email" id="">
+            <small id="" class="form-text text-muted">We'll never share your email with anyone else.</small>
+        </div>
+        <div class="form-group">
+            <label for="">Password</label>
+            <input type="password" class="form-control" [(ngModel)]="this.password" id=""
+                placeholder="Password">
+        </div>
+        <div class="form-group">
+            <label for="">Confirm Password</label>
+            <input type="password" class="form-control" [(ngModel)]="this.confirmpassword" id=""
+                placeholder="Password">
+        </div>
+
+
+    </div>
+    <div class="modal-footer">
+        <button type="submit" class="btn btn-outline-success" (click)="ResetPassword()">Reset Now</button>
+        <button type="button" class="btn btn-outline-danger" (click)="modal.close('Close click')">Close</button>
+    </div>
+</ng-template>
+<ng-template #contentregister let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title">Create Your Account</h4>
+        <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+    </div>
+    <div class="modal-body">
+        <div class="row">
+            <div class="form-group col-6">
+                <label for="">Email address</label>
+                <input type="text" class="form-control" [(ngModel)]="this.registeremail" id="">
+               
+            </div>
+            <div class="form-group col-6">
+                <label for="">User Name</label>
+                <input type="text" class="form-control" [(ngModel)]="this.registerusername" id="">
+            </div>
+            <div class="form-group col-6">
+                <label for="">First Name</label>
+                <input type="text" class="form-control" [(ngModel)]="this.registerfirstName" id="">
+            </div>
+            <div class="form-group col-6">
+                <label for="">Last Name</label>
+                <input type="text" class="form-control" [(ngModel)]="this.registerlastName" id="">
+            </div>
+
+            <div class="form-group col-6">
+                <label for="">Select Gender</label>
+                <select class="form-control" name="this.registergender" [(ngModel)]="this.registergender">
+                    <option value="male" (click)="SelectGender('male')">Male</option>
+                    <option value="Female" (click)="SelectGender('female')">Female</option>
+                </select>
+            </div>
+            <div class="form-group col-6">
+                <label for="">Birthdate</label>
+                <input type="date" min="1973-01-01" max="2005-01-01" class="form-control"
+                    [(ngModel)]="this.registerdateOfBirth" id="">
+            </div>
+            <div class="form-group col-6">
+                <label for="">Password</label>
+                <input type="password" class="form-control" [(ngModel)]="this.registerpassword"
+                    id="" placeholder="Password">
+            </div>
+            <div class="form-group col-6">
+                <label for="">Confirm Password</label>
+                <input type="password" class="form-control" [(ngModel)]="this.registerconfirmpassword"
+                    id="" placeholder="Password">
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="submit" class="btn btn-outline-success" (click)="Register()">Join Now</button>
+
+        <button type="button" class="btn btn-outline-danger" (click)="modal.close('Close click')">Close</button>
+    </div>
+</ng-template>

@@ -1,0 +1,174 @@
+<app-nav></app-nav>
+<div class="container-xl">
+    <div class="row" style="margin-top: 15px;">
+        <div class="form-group col-3">
+            <label for="">User Id</label>
+            <input type="number" class="form-control"  [(ngModel)]="this.searchUserId">
+        </div>
+        <div class="form-group col-3">
+            <label for="">User Name</label>
+            <input type="text" class="form-control" [(ngModel)]="this.searchUserName" >
+        </div>
+        <div class="form-group col-3">
+            <label for="">User Email</label>
+            <input type="text" class="form-control"  [(ngModel)]="this.searchUserEmail">
+        </div>
+        <div class="form-group col-3">
+           <br> 
+           <button class="btn btn-outline-primary form-control" (click)="Search()">Search</button>
+        </div>
+    </div>
+    <div class="table-responsive ">
+        <div class="table-wrapper">
+            <div class="table-title">
+                <div class="row">
+                    <div class="col-sm-5">
+                        <h2>User <b>Management</b></h2>
+                        
+                    </div>
+                    <div class="col-sm-7">
+                        <button class="btn btn-outline-primary" (click)="ViewUser(contentupdateUser,null,'add')">Add User</button>
+                        <button class="btn btn-outline-primary" *ngIf="this.usersIds.length >0" (click)="DeleteAll()">Delete All</button>
+                    </div>
+                </div>
+            </div>
+            <table class="table table-bordered table-striped table-hover">
+                <thead>
+                    <tr>
+                        
+                        <th colspan="2">userId</th>
+                        <th>username</th>
+                        <th>email</th>
+                        <th>firstName</th>
+                        <th>lastName</th>
+                        <th>status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let input of this.service.users;let i=index">
+                        <td colspan="2">
+                            <input type="checkbox" (click)="IdSelected(input.userId)" style="margin-right: 6px;"/>
+                        
+                        {{input.userId}}
+                        </td>
+                        <td>{{input.username}}</td>
+                        <td>{{input.email}}</td>
+                        <td>{{input.firstName}}</td>
+                        <td>{{input.lastName}}</td>
+                        <td>{{input.status}}</td>
+                        <td>
+                            <a (click)="ViewUser(contentupdateUser,input,'edit')" class="settings" title="Edit" data-toggle="tooltip"  style="margin-left: 5px;">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+                                    <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+                                    <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
+                                  </svg>
+                            </a>
+                            <a (click)="DeleteUser(input.userId)" class="delete" title="Delete" data-toggle="tooltip" style="margin-left: 5px;">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-trash3" viewBox="0 0 16 16">
+                                    <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5ZM11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0H11Zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5h9.916Zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5Z"/>
+                                  </svg>
+                            </a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!--Update User-->
+<ng-template #contentupdateUser let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title">{{title}}</h4>
+        <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+    </div>
+    <div class="modal-body">
+        <div class="row">
+            <div class="form-group col-6" >
+                <label for="">Email address</label>
+                <input type="email" class="form-control" [(ngModel)]="this.selectedemail" id=""
+                    aria-describedby="emailHelp" placeholder="Enter email">
+                <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone
+                    else.</small>
+            </div>
+            <div class="form-group col-6">
+                <label for="">User Name</label>
+                <input type="text" class="form-control" [(ngModel)]="this.selectedusername" id=""
+                    aria-describedby="emailHelp" placeholder="Enter user name">
+            </div>
+            <div class="form-group col-6">
+                <label for="">First Name</label>
+                <input type="text" class="form-control" [(ngModel)]="this.selectedfirstName" id=""
+                    aria-describedby="emailHelp" placeholder="Enter first name">
+            </div>
+            <div class="form-group col-6">
+                <label for="">Last Name</label>
+                <input type="text" class="form-control" [(ngModel)]="this.selectedlastName" id=""
+                    aria-describedby="emailHelp" placeholder="Enter last name">
+            </div>
+
+            <div class="form-group col-6" *ngIf="this.isEditModal">
+                <label for="">Select Gender</label>
+                <select class="form-control" *ngIf="this.selectedgender=='male'">
+                    <option value="male" (click)="SelectGender('male')" selected>Male</option>
+                    <option value="Female" (click)="SelectGender('female')">Female</option>
+                </select>
+                <select class="form-control" *ngIf="this.selectedgender!='male'">
+                    <option value="male" (click)="SelectGender('male')">Male</option>
+                    <option value="Female" (click)="SelectGender('female')" selected>Female</option>
+                </select>
+            </div>
+            <div class="form-group col-6" *ngIf="!this.isEditModal">
+                <label for="">Select Gender</label>
+                <select class="form-control" name="this.selectedgender" [(ngModel)]="this.selectedgender">
+                    <option value="male" (click)="SelectGender('male')">Male</option>
+                    <option value="Female" (click)="SelectGender('female')">Female</option>
+                </select>
+            </div>
+            <div class="form-group col-6" *ngIf="this.isEditModal">
+                <label for="">Birthdate</label>
+                <input type="text" min="1973-01-01" max="2005-01-01" class="form-control" [(ngModel)]="this.selecteddateOfBirth" id=""
+                    aria-describedby="emailHelp" disabled="true" placeholder="Enter Birthdate">
+            </div>
+            <div class="form-group col-6" *ngIf="!this.isEditModal">
+                <label for="">Birthdate</label>
+                <input type="date" min="1973-01-01" max="2005-01-01" class="form-control" [(ngModel)]="this.selecteddateOfBirth" id=""
+                    aria-describedby="emailHelp" placeholder="Enter Birthdate">
+            </div>
+
+            <div class="form-group col-6" *ngIf="this.isEditModal">
+                <label for="">Select Status</label>
+                <select class="form-control" *ngIf="this.selectedstatus=='active'" name="this.selectedstatus" [(ngModel)]="this.selectedstatus">
+                    <option value="active" (click)="SelectStatus('active')" selected>Active</option>
+                    <option value="delete" (click)="SelectStatus('delete')">Deleted</option>
+                </select>
+                <select class="form-control" *ngIf="this.selectedstatus!='active'" name="this.selectedstatus" [(ngModel)]="this.selectedstatus">
+                    <option value="active" (click)="SelectStatus('active')">Active</option>
+                    <option value="delete" (click)="SelectStatus('delete')" selected>Deleted</option>
+                </select>
+            </div>
+
+            <div class="form-group col-6" *ngIf="!this.isEditModal">
+                <label for="">Password</label>
+                <input type="password" class="form-control" [(ngModel)]="this.selectedpassword" id=""
+                    placeholder="Password">
+            </div>
+            <div class="form-group col-6" *ngIf="!this.isEditModal">
+                <label for="">Confirm Password</label>
+                <input type="password" class="form-control" [(ngModel)]="this.selectedconfirmpassword" id=""
+                    placeholder="Password">
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+
+        <button type="submit" class="btn btn-outline-success" (click)="AddUser()" *ngIf="!this.isEditModal">Add Now</button>
+        <button type="submit" class="btn btn-outline-primary" (click)="AddUserExit()" *ngIf="!this.isEditModal">Add Now & Exit</button>
+        
+        <button type="submit" class="btn btn-outline-success" (click)="Update()" *ngIf="this.isEditModal">Update Now </button>
+        <button type="submit" class="btn btn-outline-primary" (click)="UpdateExit()" *ngIf="this.isEditModal">Update Now & Exit</button>
+
+        <button type="button" class="btn btn-outline-danger" (click)="modal.close('Close click')">Close</button>
+    </div>
+</ng-template>

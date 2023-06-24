@@ -1,0 +1,178 @@
+<app-nav></app-nav>
+<div class="container-xl">
+    <div class="row" style="margin-top: 15px;">
+        <div class="form-group col-3">
+            <label for="">User Id</label>
+            <input type="number" class="form-control" [(ngModel)]="this.searchUserId">
+        </div>
+        <div class="form-group col-3">
+            <label for="">Account Id</label>
+            <input type="text" class="form-control" [(ngModel)]="this.searchaccountId">
+        </div>
+        <div class="form-group col-3">
+            <label for="">Account Number</label>
+            <input type="text" class="form-control" [(ngModel)]="this.searchaccountNumber">
+        </div>
+        <div class="form-group col-3">
+            <br>
+            <button class="btn btn-outline-primary form-control" (click)="Search()">Search</button>
+        </div>
+    </div>
+    <div class="table-responsive ">
+        <div class="table-wrapper">
+            <div class="table-title">
+                <div class="row">
+                    <div class="col-sm-5">
+                        <h2>Account <b>Management</b></h2>
+                    </div>
+                    <div class="col-sm-7">
+                        <button class="btn btn-outline-primary" (click)="openCreate(content)">Add Account</button>
+                        <button class="btn btn-outline-primary" *ngIf="this.accountsIds.length >0"
+                            (click)="DeleteAll()">Delete All</button>
+                    </div>
+                </div>
+            </div>
+            <table class="table table-bordered table-striped table-hover">
+                <thead>
+                    <tr>
+
+                        <th colspan="2">accountId</th>
+                        <th>userId</th>
+                        <th>accountNumber</th>
+                        <th>balance</th>
+                        <th>currency</th>
+                        <th>status</th>
+                        <th colspan="2">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let input of this.service.accounts;let i=index">
+                        <td colspan="2">
+                            <input type="checkbox" (click)="IdSelected(input.accountId)" style="margin-right: 6px;" />
+
+                            {{input.accountId}}
+                        </td>
+                        <td>{{input.userId}}</td>
+                        <td>{{input.accountNumber}}</td>
+                        <td>{{input.balance}}</td>
+                        <td>{{input.currency}}</td>
+                        <td>{{input.status}}</td>
+                        <td colspan="2">
+                            <a (click)="ViewTransaction(input.accountId)" class="view" title="View Transaction"
+                                data-toggle="tooltip" style="margin-left: 5px;">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
+                                    class="bi bi-eye-fill" viewBox="0 0 16 16">
+                                    <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z" />
+                                    <path
+                                        d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8zm8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z" />
+                                </svg>
+                            </a>
+                            <a (click)="openEdit(content,input)" class="settings" title="Edit" data-toggle="tooltip"
+                                style="margin-left: 5px;">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
+                                    class="bi bi-pencil-square" viewBox="0 0 16 16">
+                                    <path
+                                        d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
+                                    <path fill-rule="evenodd"
+                                        d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z" />
+                                </svg>
+                            </a>
+                            <a (click)="DeleteAccount(input.accountId)" class="delete" title="Delete"
+                                data-toggle="tooltip" style="margin-left: 5px;">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
+                                    class="bi bi-trash3" viewBox="0 0 16 16">
+                                    <path
+                                        d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5ZM11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0H11Zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5h9.916Zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5Z" />
+                                </svg>
+                            </a>
+                        </td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<ng-template #content let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title" *ngIf="this.isOpenForEdit">Edit Account</h4>
+        <h4 class="modal-title" *ngIf="!this.isOpenForEdit">Create Account</h4>
+        <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+    </div>
+    <div class="modal-body">
+        <div class="row">
+
+            <div class="form-group col-6" *ngIf="this.isOpenForEdit">
+                <label for="">accountId</label>
+                <input type="text" class="form-control" [(ngModel)]="this.selectedaccountId" disabled="this.isOpenForEdit"
+                    id="">
+            </div>
+            <div class="form-group col-6" *ngIf="this.isOpenForEdit">
+                <label for="">accountNumber</label>
+                <input type="text" class="form-control" [(ngModel)]="this.selecteaccountNumber"
+                    disabled="this.isOpenForEdit" id="" placeholder="">
+            </div>
+            <div class="form-group col-6" *ngIf="this.isOpenForEdit">
+                <label for="">User Id</label>
+                <input type="text" class="form-control" [(ngModel)]="this.selectedUserId" disabled="true" id=""
+                    placeholder="">
+            </div>
+            <div class="form-group col-6" *ngIf="!this.isOpenForEdit">
+                <label for="">User Id</label>
+                <input type="text" class="form-control" [(ngModel)]="this.selectedUserId" id="" placeholder="">
+            </div>
+            <div class="form-group col-6">
+                <label for="">balance</label>
+                <input type="text" class="form-control" [(ngModel)]="this.selectedbalance" id="" placeholder="">
+            </div>
+            
+            <div class="form-group col-6" *ngIf="this.isOpenForEdit">
+                <label for="">Select Currency</label>
+                <select class="form-control" *ngIf="this.selectedcurrency=='jd'" name="this.selectedcurrency"
+                    [(ngModel)]="this.selectedcurrency">
+                    <option value="jd" (click)="SelectCur('jd')" selected>JD</option>
+                    <option value="usd" (click)="SelectCur('usd')">USD</option>
+                </select>
+                <select class="form-control" *ngIf="this.selectedcurrency=='usd'" name="this.selectedcurrency"
+                    [(ngModel)]="this.selectedcurrency">
+                    <option value="jd" (click)="SelectCur('jd')">JD</option>
+                    <option value="usd" (click)="SelectCur('usd')" selected>USD</option>
+                </select>
+    
+            </div>
+            <div class="form-group col-6" *ngIf="!this.isOpenForEdit">
+                <label for="">Select Currency</label>
+                <select class="form-control" name="this.selectedcurrency" [(ngModel)]="this.selectedcurrency">
+                    <option value="jd" (click)="SelectCur('jd')">JD</option>
+                    <option value="usd" (click)="SelectCur('usd')">USD</option>
+                </select>
+            </div>
+            <div class="form-group col-6" *ngIf="this.isOpenForEdit">
+                <label for="">Select Status</label>
+                <select class="form-control" *ngIf="this.selectedstatus=='active'" name="this.selectedstatus"
+                    [(ngModel)]="this.selectedstatus">
+                    <option value="active" (click)="SelectStatus('active')" selected>Active</option>
+                    <option value="delete" (click)="SelectStatus('delete')">Deleted</option>
+                </select>
+                <select class="form-control" *ngIf="this.selectedstatus!='active'" name="this.selectedstatus"
+                    [(ngModel)]="this.selectedstatus">
+                    <option value="active" (click)="SelectStatus('active')">Active</option>
+                    <option value="delete" (click)="SelectStatus('delete')" selected>Deleted</option>
+                </select>
+            </div>
+        </div>
+       
+
+    </div>
+    <div class="modal-footer">
+        <button type="submit" class="btn btn-outline-success" (click)="AddAccount()" *ngIf="!this.isOpenForEdit">Create
+            Account</button>
+            <button type="submit" class="btn btn-outline-primary" (click)="AddAccountExit()" *ngIf="!this.isOpenForEdit">Create
+                Account & Exit</button>
+        <button type="submit" class="btn btn-outline-success" (click)="UpdateAccount()"
+            *ngIf="this.isOpenForEdit">Update Account</button>
+            <button type="submit" class="btn btn-outline-primary" (click)="UpdateAccountExit()"
+            *ngIf="this.isOpenForEdit">Update Account & Exit</button>
+        <button type="button" class="btn btn-outline-danger" (click)="modal.close('Close click')">Close</button>
+    </div>
+</ng-template>
